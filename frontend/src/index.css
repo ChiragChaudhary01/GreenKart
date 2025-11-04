@@ -1,0 +1,29 @@
+@import "tailwindcss";
+
+@layer components {
+  .btn-primary {
+    @apply px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700;
+  }
+  body {
+    font-family: "Roboto", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 430;
+    font-style: normal;
+    font-variation-settings: "wdth" 100;
+  }
+  h2 {
+    @apply text-3xl font-bold;
+  }
+  .formItemDiv {
+    @apply flex flex-col py-2 gap-[2px];
+  }
+  .field {
+    @apply text-green-600 font-medium border-1 rounded-[5px] border-green-200 p-2 text-[12px] w-[370px];
+  }
+  .errorMessage {
+    @apply fixed mt-15 text-[11px] text-red-500;
+  }
+  Label {
+    @apply text-[14px];
+  }
+}
