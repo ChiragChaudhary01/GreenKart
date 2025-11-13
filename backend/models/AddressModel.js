@@ -15,6 +15,15 @@ const AddressModel = {
       );
     });
   },
+  findAddress: (user_id) => {
+    return new Promise((resolve, reject) => {
+      const sql = "select * from Address where user_id = ?";
+      db.query(sql, [user_id], (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
+      });
+    });
+  },
 };
 
 export default AddressModel;

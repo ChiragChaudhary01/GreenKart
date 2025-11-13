@@ -23,6 +23,7 @@ const loginSchema = object().shape({
 export default function Login() {
     const { login } = useAuth();
     const isLoading = useSelector((state) => state.login.loading);
+    const role = useSelector((state) => state.login.role);
 
     const navigate = useNavigate();
 
@@ -31,7 +32,7 @@ export default function Login() {
             const response = await login(values);
             console.log("Login successfully", response);
             if (response.data.isVerified) {
-                navigate("/");
+                navigate("/products");
             } else {
                 navigate("/verify-otp");
             }

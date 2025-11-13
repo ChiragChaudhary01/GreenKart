@@ -27,7 +27,7 @@ export default function verifyOTP() {
             values.email = email;
             const response = await verifyOTP(values);
             console.log("Email verified successfully", response);
-            navigate("/");
+            navigate("/products");
         } catch (error) {
             console.error(error);
         } finally {

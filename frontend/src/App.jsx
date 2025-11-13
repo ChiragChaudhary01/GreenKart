@@ -5,6 +5,10 @@ import { Routes, Route } from "react-router-dom";
 import Login from './pages/Auth/Login.jsx';
 import VerifyOTP from './pages/Auth/VerifyOTP.jsx';
 import LandingPage from './pages/LandingPage/LandingPage.jsx';
+import BrowseProducts from './pages/Consumer/BrowseProducts.jsx';
+import Product from './pages/Consumer/Product.jsx';
+import Cart from './pages/Consumer/Cart.jsx';
+import Order from './pages/Consumer/Order.jsx';
 
 function App() {
 
@@ -15,6 +19,10 @@ function App() {
         <Route path='/signup' element={<Signup />} />
         <Route path='/login' element={<Login />} />
         <Route path='/verify-otp' element={<VerifyOTP />} />
+        <Route path='/products' element={<BrowseProducts />} />
+        <Route path='/products/:id' element={<Product />} />
+        <Route path='/checkout/:id' element={<Order />} />
+        <Route path='/cart' element={<Cart />} />
       </Routes>
       <ToastContainer
         position="top-right"

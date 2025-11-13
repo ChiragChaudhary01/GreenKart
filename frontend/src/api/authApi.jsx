@@ -13,7 +13,8 @@ export default function AuthProvider({ children }) {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/auth/signup`,
-        formData
+        formData,
+        { withCredentials: true } // ✅ send cookie to backend
       );
       console.log("singup:response", response);
       dispatch(login_end({ email: response.data.email, user_name: response.data.user_namem, role: response.data.role }));
@@ -34,7 +35,8 @@ export default function AuthProvider({ children }) {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/auth/login`,
-        formData
+        formData,
+        { withCredentials: true } // ✅ send cookie to backend
       );
       console.log("Login:response", response.data.message);
       if (response.data.isVerified) {
@@ -59,7 +61,8 @@ export default function AuthProvider({ children }) {
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_SERVER_URL}/auth/verify-otp`,
-        formData
+        formData,
+        { withCredentials: true } // ✅ send cookie to backend
       );
       console.log("verifyOTP:response", response.data.message);
       toast.success(`${response.data.user_name} Wellcome to GreenKart`);

@@ -5,6 +5,7 @@ import { adminRouter } from "./routes/adminRoutes.js";
 import { consumerRouter } from "./routes/consumerRoutes.js";
 import { farmerRouter } from "./routes/farmerRoutes.js";
 import { deliveryRouter } from "./routes/deliveryRoutes.js";
+import paymentRouter from "./routes/payment.js";
 import cors from "cors";
 
 const app = express();
@@ -28,5 +29,6 @@ app.use("/admin", adminRouter);
 app.use(consumerRouter);
 app.use("/farmer", farmerRouter);
 app.use("/delivery", deliveryRouter);
+app.use("/api/payment", paymentRouter);
 
 export default app;

@@ -16,7 +16,7 @@ const CartModel = {
   getAll: (consumer_id) => {
     return new Promise((resolve, reject) => {
       const sql =
-        "select c.*, p.name, p.price from Cart c left join products p on c.product_id = p.product_id where consumer_id = ?";
+        "select c.*, p.* from Cart c left join products p on c.product_id = p.product_id where consumer_id = ?";
       db.query(sql, [consumer_id], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);
@@ -29,6 +29,9 @@ const CartModel = {
       const sql = "update cart set quantity = ? where cart_id = ?";
       db.query(sql, [quantity, cart_id], (err, result) => {
         if (err) return reject(err);
+        if (result.affectedRows === 0) {
+          return reject(new Error("No rows updated, check cart_id"));
+        }
         resolve(result);
       });
     });

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 
-function Button({ children, variant = "primary", size = "md", more = "" }) {
-    const base = "rounded-lg font-medium transition-colors";
+function Button({ children, variant = "primary", size = "md", more = "", onClick }) {
+    const base = "rounded-lg font-medium transition-colors cursor-pointer";
 
     const variants = {
         primary: "bg-green-600 text-white hover:bg-green-700",
@@ -16,7 +16,7 @@ function Button({ children, variant = "primary", size = "md", more = "" }) {
     };
 
     return (
-        <button className={clsx(base, variants[variant], sizes[size], more)}>
+        <button className={clsx(base, variants[variant], sizes[size], more)} onClick={onClick}>
             {children}
         </button>
     );

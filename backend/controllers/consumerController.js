@@ -13,6 +13,20 @@ const consumerController = {
       res.status(500).json({ error: "Server error" });
     }
   },
+  getAllByPincode: async (req, res) => {
+    const { pincode } = req.params;
+    try {
+      if (!pincode) {
+        res.status(400).json({ error: "pincode is required" });
+      }
+
+      const rows = await ProductModel.getAllByPincode(pincode);
+      res.json(rows);
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ error: "Server error" });
+    }
+  },
   //   Get product details
   getProductDetails: async (req, res) => {
     const { id } = req.params;
@@ -23,6 +37,24 @@ const consumerController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Server error" });
+    }
+  },
+
+  //fileter product
+  getFileteredProducts: async (req, res) => {
+    try {
+      const { name, pincode } = req.query;
+
+      if (!name) {
+        const rows = await ProductModel.getAll();
+        return res.json(rows);
+      }
+
+      const rows = await ProductModel.getFilteredProducts(pincode, name);
+      return res.json(rows);
+    } catch (error) {
+      console.error("Error in getFileteredProducts:", error);
+      return res.status(500).json({ error: "Server error" });
     }
   },
 
@@ -56,11 +88,12 @@ const consumerController = {
   //   Update cart item (quantity)
   updateItemFromCart: async (req, res) => {
     const { id } = req.params;
+    const cartId = parseInt(id, 10);
     const { quantity } = req.body;
     if (!quantity || !id)
       return res.status(400).json({ error: "All fields are required" });
     try {
-      await CartModel.update(quantity, id);
+      await CartModel.update(quantity, cartId);
       res.status(200).json({ message: "Cart item updated successfully" });
     } catch (error) {
       console.error(error);
@@ -84,7 +117,6 @@ const consumerController = {
   // POST /checkout Checkout / Place order
   checkoutOrder: async (req, res) => {
     const user_id = req.user.user_id;
-    console.log(user_id);
     const { address_data, product_id, quantity, price } = req.body;
     let { address_id, address_line, city, state, pincode, is_default } =
       address_data;
@@ -116,7 +148,6 @@ const consumerController = {
         );
         address_id = addresAddResult.insertId;
       }
-      console.log(user_id);
       await OrderModel.checkoutOrder(
         user_id,
         address_id,
@@ -139,6 +170,17 @@ const consumerController = {
     } catch (error) {
       console.error(error);
       res.status(500).json({ error: "Server error" });
+    }
+  },
+  // GET /address View Address
+  getAddress: async (req, res) => {
+    const user_id = req.user.user_id;
+    try {
+      const rows = await AddressModel.findAddress(user_id);
+      res.json(rows);
+    } catch (error) {
+      console.error(error);
+      res.state(500).json({ error: "Server error" });
     }
   },
 };

@@ -11,6 +11,16 @@ const ProductModel = {
       });
     });
   },
+  getAllByPincode: (pincode) => {
+    return new Promise((resolve, reject) => {
+      const sql =
+        "select p.*, u.user_name as farmer_name, u.phone as farmer_phone, a.pincode from Products p join Users u on p.farmer_id = u.user_id join address as a on u.user_id = a.user_id where a.pincode = ? order by p.created_at desc";
+      db.query(sql, pincode, (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows);
+      });
+    });
+  },
   // Approve/reject product
   updateStatus: (prduct_id, status) => {
     return new Promise((resolve, reject) => {
@@ -80,6 +90,16 @@ const ProductModel = {
     return new Promise((resolve, reject) => {
       const sql = "select * from Products where product_id = ?";
       db.query(sql, [product_id], (err, rows) => {
+        if (err) return reject(err);
+        resolve(rows);
+      });
+    });
+  },
+  getFilteredProducts: (pincode, name) => {
+    return new Promise((resolve, reject) => {
+      const sql =
+        "select p.*, u.user_name as farmer_name, u.phone as farmer_phone, a.pincode from Products p join Users u on p.farmer_id = u.user_id join address as a on u.user_id = a.user_id where a.pincode = ? and p.name like ? order by p.created_at desc";
+      db.query(sql, [pincode, `%${name}%`], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);
       });

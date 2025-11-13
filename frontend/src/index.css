@@ -11,19 +11,40 @@
     font-style: normal;
     font-variation-settings: "wdth" 100;
   }
+  h1 {
+    @apply text-5xl font-bold;
+  }
   h2 {
+    @apply text-4xl font-bold;
+  }
+  h3 {
     @apply text-3xl font-bold;
   }
+  h4 {
+    @apply text-2xl font-bold;
+  }
   .formItemDiv {
-    @apply flex flex-col py-2 gap-[2px];
+    @apply flex flex-col py-2 gap-[3px];
   }
   .field {
-    @apply text-green-600 font-medium border-1 rounded-[5px] border-green-200 p-2 text-[12px] w-[370px];
+    @apply text-green-800 border-1 rounded-[5px] border-green-400 p-2 text-[12px] w-[370px];
   }
   .errorMessage {
     @apply fixed mt-15 text-[11px] text-red-500;
   }
   Label {
     @apply text-[14px];
+  }
+  .landingPageContainer {
+    background-image: url("Landing page main img.png");
+    @apply h-[100vh] w-[100vw] bg-cover text-white flex justify-center items-center flex-col bg-blend-darken;
+    background-color: rgba(0, 0, 0, 0.5); /* add a semi-transparent overlay */
+    background-blend-mode: darken; /* darkens using the bg color */
+  }
+  .landingPageDiv {
+    @apply flex justify-center items-center flex-col gap-3;
+  }
+  .header {
+    @apply h-13;
   }
 }

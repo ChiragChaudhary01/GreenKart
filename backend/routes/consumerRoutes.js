@@ -11,6 +11,20 @@ consumerRouter.get(
   consumerController.getAllProducts
 );
 
+// GET /products → Browse all products
+consumerRouter.get(
+  "/products/bypincode/:pincode",
+  authMiddleware,
+  consumerController.getAllByPincode
+);
+
+// GET /products/filter => Browse filtered Products
+consumerRouter.get(
+  "/products/filter",
+  authMiddleware,
+  consumerController.getFileteredProducts
+);
+
 // GET /products/:id → Get product details
 consumerRouter.get(
   "/product/:id",
@@ -55,3 +69,6 @@ consumerRouter.get(
   authMiddleware,
   consumerController.getOrderHistory
 );
+
+// GET /address View address
+consumerRouter.get("/address", authMiddleware, consumerController.getAddress);
