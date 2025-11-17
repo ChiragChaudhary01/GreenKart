@@ -67,7 +67,7 @@ export default function Login() {
                                 <Field type="password" name="password" placeholder="Enter password" className="field" />
                                 <ErrorMessage name="password" component="div" className="errorMessage" />
                             </div>
-                            <Button variant="primary" size="md" more="w-[100%] mt-5">Submit</Button>
+                            <Button variant="primary" size="md" more="w-[100%] mt-5" type="submit">Submit</Button>
                         </Form>
                     </Formik>
                 </div>

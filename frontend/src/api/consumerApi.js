@@ -154,3 +154,23 @@ export const viewAddress = async () => {
     throw error;
   }
 };
+
+export const checkoutOrder = async (FormData) => {
+  try {
+    const response = await axios.post(
+      `${import.meta.env.VITE_SERVER_URL}/checkout`,
+      {
+        FormData,
+      },
+      {
+        withCredentials: true,
+      }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.error);
+    console.error(error.response.data.error);
+    throw error;
+  }
+};

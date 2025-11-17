@@ -53,44 +53,50 @@ const Order = () => {
         pincode: Yup.string().min(6, "Must be 6 characters").required("required"),
     });
 
-    const handlePayment = async () => {
+    const handlePayment = async (address) => {
+        console.log("Payment started with address:", address);
+
         const res = await loadRazorpayScript("https://checkout.razorpay.com/v1/checkout.js");
         if (!res) {
             alert("Razorpay SDK failed to load. Check your internet connection.");
             return;
         }
+        console.log("Razorpay SDK loaded ✅");
 
-        // You can dynamically calculate amount based on product or cart total
-        const amount = cartItem.price;
+        const amount = cartItem.quantity * cartItem.price * 1.08 + 5;
+        console.log("Amount to pay:", amount);
 
-        // Create order on backend
-        const order = await axios.post("http://localhost:5000/api/payment/create-order", { amount });
+        try {
+            const order = await axios.post("http://localhost:5000/api/payment/create-order", { amount });
+            console.log("Order created:", order.data);
 
-        const options = {
-            key: "YOUR_RAZORPAY_KEY_ID", // test key
-            amount: order.data.amount,
-            currency: order.data.currency,
-            name: "GreenKart",
-            description: "Order Payment",
-            order_id: order.data.id,
-            handler: function (response) {
-                alert("Payment successful!");
-                console.log(response);
-                // you can call API to store payment info in DB here
-            },
-            prefill: {
-                name: "Chirag Chaudhary",
-                email: "chirag@example.com",
-                contact: "9999999999",
-            },
-            theme: {
-                color: "#3399cc",
-            },
-        };
+            const options = {
+                key: order.data.key,
+                amount: order.data.amount,
+                currency: order.data.currency,
+                name: "GreenKart",
+                description: "Order Payment",
+                order_id: order.data.id,
+                handler: function (response) {
+                    alert("Payment successful!");
+                    console.log("Payment response:", response);
+                },
+                prefill: {
+                    name: "Chirag Chaudhary",
+                    email: "chirag@example.com",
+                    contact: "9999999999",
+                },
+                theme: { color: "#3399cc" },
+            };
 
-        const paymentObject = new window.Razorpay(options);
-        paymentObject.open();
+            const paymentObject = new window.Razorpay(options);
+            paymentObject.open();
+        } catch (err) {
+            console.error("Payment error:", err);
+            alert("Error while creating order. Check console for details.");
+        }
     };
+
 
 
     return (
@@ -99,19 +105,34 @@ const Order = () => {
             {cartItem ?
                 <div className='px-[10vw] py-5 flex flex-col gap-4'>
                     <h2>Chekout {cartItem.name}</h2>
-                    <div className='flex flex-col gap-3'>
-                        <Formik
-                            initialValues={selectedAddress ? {
-                                address_line: selectedAddress.address_line,
-                                city: selectedAddress.city,
-                                state: selectedAddress.state,
-                                pincode: selectedAddress.pincode
-                            } : {}}
-                            validationSchema={orderSchema}
-                            onSubmit={(values) => console.log(values)}
-                        >
-                            <Form>
-                                <h4>1. Address</h4>
+                    <Formik
+                        initialValues={selectedAddress ? {
+                            address_line: selectedAddress.address_line,
+                            city: selectedAddress.city,
+                            state: selectedAddress.state,
+                            pincode: selectedAddress.pincode
+                        } : {
+                            address_line: '',
+                            city: '',
+                            state: '',
+                            pincode: ''
+                        }}
+                        validationSchema={orderSchema}
+                        onSubmit={async (values) => {
+                            const addressToUse = selectedAddress || values;
+
+                            // check if address is empty
+                            if (!addressToUse.address_line || !addressToUse.city || !addressToUse.state || !addressToUse.pincode) {
+                                alert("Please select or fill an address before proceeding to payment.");
+                                return;
+                            }
+
+                            await handlePayment(addressToUse);
+                        }}
+                    >
+                        <Form className='flex flex-col gap-5'>
+                            <div className='flex flex-col'>
+                                <h4>1. Address</h4>=[-ppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppppp]
                                 {selectedAddress ?
                                     (
                                         <div className='flex flex-col gap-3 ml-3 mt-3'>
@@ -170,10 +191,43 @@ const Order = () => {
                                                 )}
                                         </div>
                                     )}
-                            </Form>
-                        </Formik>
-                        <Button onClick={handlePayment} more="w-40 mt-4">Pay Now</Button>
-                    </div>
+                            </div>
+                            <div className='flex flex-col gap-3'>
+                                <h4>2. Order Summary</h4>
+                                <div className='flex flex-col w-full gap-2'>
+                                    <div className='flex w-full justify-between items-center bg-gray-100 p-3 rounded-xl'>
+                                        <div>
+                                            <h5>Subtotal</h5>
+                                            <p className='text-green-700'>{cartItem.quantity} items</p>
+                                        </div>
+                                        <p>₹{(cartItem.quantity * cartItem.price).toFixed(2)}</p>
+                                    </div>
+                                    <div className='flex w-full justify-between items-center bg-gray-100 p-3 rounded-xl'>
+                                        <div>
+                                            <h5>Shipping</h5>
+                                            <p className='text-green-700'>standard</p>
+                                        </div>
+                                        <p>₹5</p>
+                                    </div>
+                                    <div className='flex w-full justify-between items-center bg-gray-100 p-3 rounded-xl'>
+                                        <div>
+                                            <h5>Tax</h5>
+                                            <p className='text-green-700'>Estimated Tax</p>
+                                        </div>
+                                        <p>₹{(cartItem.quantity * cartItem.price * 0.08).toFixed(2)}</p>
+                                    </div>
+                                    <div className='flex w-full justify-between items-center bg-gray-100 p-3 rounded-xl'>
+                                        <div>
+                                            <h5>Total</h5>
+                                            <p className='text-green-700'>Total amount</p>
+                                        </div>
+                                        <p>₹{(cartItem.quantity * cartItem.price * 1.08 + 5).toFixed(2)}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <Button more='mt-5' type='submit'>Pay Now</Button>
+                        </Form>
+                    </Formik>
                 </div > :
                 <h4 className='px-[10vw] py-5'>Product not found.</h4>
             }
