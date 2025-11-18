@@ -15,11 +15,16 @@ function Button({ children, variant = "primary", size = "md", more = "", onClick
         lg: "px-6 py-3 text-lg",
     };
 
-    return (
-        <button type={type} className={clsx(base, variants[variant], sizes[size], more)} onClick={onClick}>
-            {children}
-        </button>
-    );
+    const props = {
+        type,
+        className: clsx(base, variants[variant], sizes[size], more),
+    };
+
+    if (type !== "submit") {
+        props.onClick = onClick;
+    }
+
+    return <button {...props}>{children}</button>;
 }
 
 

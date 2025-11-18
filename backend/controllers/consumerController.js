@@ -117,7 +117,8 @@ const consumerController = {
   // POST /checkout Checkout / Place order
   checkoutOrder: async (req, res) => {
     const user_id = req.user.user_id;
-    const { address_data, product_id, quantity, price } = req.body;
+    const { address_data, product_id, quantity, price, cart_id } = req.body;
+    console.log(req.body, address_data, product_id, quantity, price);
     let { address_id, address_line, city, state, pincode, is_default } =
       address_data;
     try {
@@ -131,10 +132,11 @@ const consumerController = {
           !city ||
           !state ||
           !pincode ||
-          !is_default ||
+          is_default == null ||
           !product_id ||
           !quantity ||
-          !price
+          !price ||
+          !cart_id
         ) {
           return res.status(400).json({ error: "All field are required" });
         }
@@ -155,6 +157,7 @@ const consumerController = {
         quantity,
         price
       );
+      const response = await CartModel.delete(cart_id);
       res.status(201).json({ message: "Order checkout successfully" });
     } catch (error) {
       console.error(error);

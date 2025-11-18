@@ -50,7 +50,7 @@ const OrderModel = {
   getAllForConsumer: (consumer_id) => {
     return new Promise((resolve, reject) => {
       const sql =
-        "select o.order_id, u.phone as consumer_phone, a.address_line as consumer_address, p.name as product_name, oi.quantity, oi.price as item_price, o.total_amount, case when o.order_status in ('confirmed', 'shipped', 'delivered') then 'paid' else 'unpaid' end as payment_status, d.delivery_status, dp.user_name as delivery_persone_name, dp.phone as delivery_person_phone from orders o join users u on o.consumer_id = u.user_id left join address a on o.address_id = a.address_id join order_items oi on o.order_id = oi.order_id join products p on oi.product_id = p.product_id left join delivery d on o.order_id = d.order_id left join users dp on d.delivery_person_id = dp.user_id where o.consumer_id = ? order by o.created_at desc";
+        "select o.order_id, o.created_at, u.phone as consumer_phone, a.address_line as consumer_address, p.name as product_name, oi.quantity, oi.price as item_price, o.total_amount, case when o.order_status in ('confirmed', 'shipped', 'delivered') then 'paid' else 'unpaid' end as payment_status, d.delivery_status, dp.user_name as delivery_persone_name, dp.phone as delivery_person_phone from orders o join users u on o.consumer_id = u.user_id left join address a on o.address_id = a.address_id join order_items oi on o.order_id = oi.order_id join products p on oi.product_id = p.product_id left join delivery d on o.order_id = d.order_id left join users dp on d.delivery_person_id = dp.user_id where o.consumer_id = ? order by o.created_at desc";
       db.query(sql, [consumer_id], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);

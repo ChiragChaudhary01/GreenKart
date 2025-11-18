@@ -8,6 +8,7 @@ import LandingPage from './pages/LandingPage/LandingPage.jsx';
 import BrowseProducts from './pages/Consumer/BrowseProducts.jsx';
 import Product from './pages/Consumer/Product.jsx';
 import Cart from './pages/Consumer/Cart.jsx';
+import Chekout from './pages/Consumer/Checkout.jsx';
 import Order from './pages/Consumer/Order.jsx';
 
 function App() {
@@ -21,8 +22,9 @@ function App() {
         <Route path='/verify-otp' element={<VerifyOTP />} />
         <Route path='/products' element={<BrowseProducts />} />
         <Route path='/products/:id' element={<Product />} />
-        <Route path='/checkout/:id' element={<Order />} />
+        <Route path='/checkout/:id' element={<Chekout />} />
         <Route path='/cart' element={<Cart />} />
+        <Route path='/orders' element={<Order />} />
       </Routes>
       <ToastContainer
         position="top-right"

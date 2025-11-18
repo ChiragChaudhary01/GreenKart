@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import ConsumerHeader from '../../UI/ConsumerHeader'
 import { deleteFromCart, setQuantity, viewCart } from '../../api/consumerApi';
 import CartItemCart from '../../components/CartItemCart';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -28,6 +29,7 @@ const Cart = () => {
 
     const handleDelete = async (cartId) => {
         await deleteFromCart(cartId);
+        toast("Item deleted from the Cart");
         fetchCartItems();
     }
 
@@ -44,12 +46,18 @@ const Cart = () => {
                             ))}
                         </div>
                         :
-                        <p className="pt-10">No Products found.</p>
+                        <p className="pt-5">No Products found.</p>
                     }
                 </div>
                 <div>
-                    <h4>SubTotal</h4>
-                    <p className=' text-green-600'>₹ {subTotal}</p>
+                    {cartItems && cartItems.length > 0 ?
+                        <div>
+                            <h4>SubTotal</h4>
+                            <p className=' text-green-600'>₹ {subTotal}</p>
+                        </div>
+                        :
+                        <></>
+                    }
                 </div>
             </div>
         </div>

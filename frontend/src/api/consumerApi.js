@@ -159,12 +159,27 @@ export const checkoutOrder = async (FormData) => {
   try {
     const response = await axios.post(
       `${import.meta.env.VITE_SERVER_URL}/checkout`,
-      {
-        FormData,
-      },
+      FormData,
       {
         withCredentials: true,
       }
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    toast.error(error.response.data.error);
+    console.error(error.response.data.error);
+    throw error;
+  }
+};
+
+export const getOrderHistory = async () => {
+  try {
+    const response = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/orders`,
+      {
+        withCredentials: true,
+      } // ✅ send cookie to backend
     );
     console.log(response.data);
     return response.data;
