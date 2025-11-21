@@ -100,7 +100,7 @@ export default function Signup() {
                                 </Field>
                                 <ErrorMessage name="role" component="div" className="errorMessage" />
                             </div>
-                            <Button variant="primary" size="md" more="w-[100%] mt-5">Submit</Button>
+                            <Button variant="primary" size="md" more="w-[100%] mt-5" type="submit">Submit</Button>
                         </Form>
                     </Formik>
                 </div>

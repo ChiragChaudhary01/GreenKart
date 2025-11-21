@@ -65,8 +65,8 @@ export default function verifyOTP() {
                                 <ErrorMessage name="otp" component="div" className="errorMessage" />
                             </div>
                             <div className="flex gap-4">
-                                <Button variant="primary" size="md" more="w-[100%] mt-5">Verify</Button>
-                                <button className="bg-green-600 text-white hover:bg-green-700 px-4 py-2 text-base rounded-lg font-medium transition-colors w-[100%] mt-5" onClick={handleResendOTP} variant="primary" size="md" more="w-[100%] mt-5">Resend OTP</button>
+                                <Button variant="primary" size="md" more="w-[100%] mt-5" type="submit">Verify</Button>
+                                <button className="bg-green-600 text-white hover:bg-green-700 px-4 py-2 text-base rounded-lg font-medium transition-colors w-[100%] mt-5" onClick={handleResendOTP} variant="primary" size="md" more="w-[100%] mt-5" type="reset">Resend OTP</button>
                             </div>
                         </Form>
                     </Formik>

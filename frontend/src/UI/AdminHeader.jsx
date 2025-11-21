@@ -1,6 +1,6 @@
 import { NavLink } from "react-router-dom";
 
-const ConsumerHeader = () => {
+const AdminHeader = () => {
     const activeClass = "text-green-600 font-semibold";
     const inactiveClass = "text-gray-600 hover:text-green-600";
 
@@ -11,12 +11,13 @@ const ConsumerHeader = () => {
                 <NavLink to="/" className={({ isActive }) => isActive ? activeClass : inactiveClass}>GreenKart</NavLink>
             </div>
             <div className="flex justify-between items-center gap-5 text-xl">
-                <NavLink to="/products" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Products</NavLink>
-                <NavLink to="/cart" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Cart</NavLink>
-                <NavLink to="/orders" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Orders</NavLink>
+                <NavLink to="/admin/overview" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Overview</NavLink>
+                <NavLink to="/admin/products" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Products</NavLink>
+                <NavLink to="/admin/assign-orders" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Assign-orders</NavLink>
+                {/* <NavLink to="/admin/users" className={({ isActive }) => isActive ? activeClass : inactiveClass}>Users</NavLink> */}
             </div>
         </header>
     )
 }
 
-export default ConsumerHeader
+export default AdminHeader

@@ -23,16 +23,20 @@ const loginSchema = object().shape({
 export default function Login() {
     const { login } = useAuth();
     const isLoading = useSelector((state) => state.login.loading);
-    const role = useSelector((state) => state.login.role);
 
     const navigate = useNavigate();
 
     const handleSubmit = async (values, { setSubmitting }) => {
         try {
             const response = await login(values);
-            console.log("Login successfully", response);
+            const role = response.data.role;
             if (response.data.isVerified) {
-                navigate("/products");
+                console.log(role);
+                if (role == "admin") {
+                    navigate("/admin/overview");
+                } else {
+                    navigate("/products");
+                }
             } else {
                 navigate("/verify-otp");
             }

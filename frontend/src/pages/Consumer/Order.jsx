@@ -23,7 +23,7 @@ const Order = () => {
             <ConsumerHeader />
 
             <div className='px-[10vw] py-5'>
-                <h2 className='text-xl font-semibold'>Order History</h2>
+                <h2 className='font-semibold'>Order History</h2>
 
                 <div className='mt-4 space-y-4'>
                     {orders.length > 0 ? (
