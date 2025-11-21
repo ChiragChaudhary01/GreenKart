@@ -41,7 +41,7 @@ const Products = () => {
         <div>
             <AdminHeader />
             <div className='px-[10vw] pt-7 flex flex-col gap-7'>
-                <h2>Overview</h2>
+                <h2>Manage Products</h2>
                 <div className='flex flex-col'>
                     <div className='grid grid-cols-6 border border-b-2 border-gray-200 py-2.5 pl-4 rounded-t-xl'>
                         <p>Product Name</p>

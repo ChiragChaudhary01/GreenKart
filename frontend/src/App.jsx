@@ -13,7 +13,8 @@ import Order from './pages/Consumer/Order.jsx';
 import Overview from './pages/Admin/Overview.jsx';
 import Products from './pages/Admin/Products.jsx';
 import Assign from './pages/Admin/Assign.jsx';
-import Users from './pages/Admin/Users.jsx';
+import DeliveryDashboard from './pages/Delivery/DeliveryDashboard.jsx';
+// import Users from './pages/Admin/Users.jsx';
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
         <Route path='/admin/overview' element={<Overview />} />
         <Route path='/admin/products' element={<Products />} />
         <Route path='/admin/assign-orders' element={<Assign />} />
+        <Route path='/delivery/dashboard' element={<DeliveryDashboard />} />
         {/* <Route path='/admin/users' element={<Users />} /> */}
       </Routes>
       <ToastContainer

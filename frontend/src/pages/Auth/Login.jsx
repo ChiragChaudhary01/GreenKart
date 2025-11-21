@@ -32,10 +32,22 @@ export default function Login() {
             const role = response.data.role;
             if (response.data.isVerified) {
                 console.log(role);
-                if (role == "admin") {
-                    navigate("/admin/overview");
-                } else {
-                    navigate("/products");
+                switch (role) {
+                    case "admin":
+                        navigate("/admin/overview");
+                        break;
+                    case "delivery":
+                        navigate("/delivery/dashboard");
+                        break;
+                    case "farmer":
+                        navigate("/farmer/dashboard");
+                        break;
+                    case "comsumer":
+                        navigate("/products");
+                        break;
+                    default:
+                        navigate("/products");
+                        break;
                 }
             } else {
                 navigate("/verify-otp");

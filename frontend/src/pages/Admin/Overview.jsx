@@ -8,19 +8,30 @@ const Overview = () => {
     const [orders, setOrders] = useState([]);
 
     const getProducts = async () => {
-        const products = await getAllProducts();
-        setProducts(products);
+        try {
+            const products = await getAllProducts();
+            setProducts(products);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     const getOrders = async () => {
-        const orders = await getAllOrders();
-        setOrders(orders);
-        console.log(orders);
+        try {
+            const orders = await getAllOrders();
+            setOrders(orders);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     const getUsers = async () => {
-        const users = await getAllUsers();
-        setUsers(users);
+        try {
+            const users = await getAllUsers();
+            setUsers(users);
+        } catch (error) {
+            toast.error(error);
+        }
     }
 
     useEffect(() => {
