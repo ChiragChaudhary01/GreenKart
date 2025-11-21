@@ -14,6 +14,8 @@ import Overview from './pages/Admin/Overview.jsx';
 import Products from './pages/Admin/Products.jsx';
 import Assign from './pages/Admin/Assign.jsx';
 import DeliveryDashboard from './pages/Delivery/DeliveryDashboard.jsx';
+import FarmerDashboard from './pages/Farmer/FarmerDashboard.jsx';
+import { ManageProducts } from './pages/Farmer/ManageProducts.jsx';
 // import Users from './pages/Admin/Users.jsx';
 
 function App() {
@@ -34,6 +36,8 @@ function App() {
         <Route path='/admin/products' element={<Products />} />
         <Route path='/admin/assign-orders' element={<Assign />} />
         <Route path='/delivery/dashboard' element={<DeliveryDashboard />} />
+        <Route path='/farmer/dashboard' element={<FarmerDashboard />} />
+        <Route path='/farmer/manage-products' element={<ManageProducts />} />
         {/* <Route path='/admin/users' element={<Users />} /> */}
       </Routes>
       <ToastContainer

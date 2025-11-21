@@ -59,7 +59,7 @@ const farmerController = {
         description: description ?? product.description,
         price: price ?? product.price,
         stock: stock ?? product.stock,
-        img_url: img_url,
+        img_url: img_url ?? product.img_url,
       };
       await ProductModel.update(id, updateDate);
       res.status(201).json({ message: "Product Updated successfully" });

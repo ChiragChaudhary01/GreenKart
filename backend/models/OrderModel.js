@@ -61,7 +61,7 @@ const OrderModel = {
   getAllForFarmer: (farmer_id) => {
     return new Promise((resolve, reject) => {
       const sql =
-        "select o.order_id, p.name, p.price, oi.quantity, o.total_amount, uc.user_name, o.created_at, a.address_line, a.city from orders o left join order_items oi on o.order_id = oi.order_id left join users uc on uc.user_id = o.consumer_id left join products p on oi.product_id = p.product_id left join users uf on p.farmer_id = uf.user_id left join address a on o.address_id = a.address_id where uf.user_id = ? order by o.created_at desc";
+        "select o.order_id, p.name, p.price, oi.quantity, o.order_status, o.total_amount, uc.user_name, o.created_at, a.address_line, a.city from orders o left join order_items oi on o.order_id = oi.order_id left join users uc on uc.user_id = o.consumer_id left join products p on oi.product_id = p.product_id left join users uf on p.farmer_id = uf.user_id left join address a on o.address_id = a.address_id where uf.user_id = ? order by o.created_at desc";
       db.query(sql, [farmer_id], (err, rows) => {
         if (err) return reject(err);
         resolve(rows);
